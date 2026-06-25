@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Pour toi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF9F5;
+    --paper: #FFFFFF;
+    --ink: #2B2A28;
+    --ink-soft: #6B6660;
+    --line: #E4DFD6;
+    --accent: #A8765B;
+    --accent-soft: #D9C3B3;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Tulip mark (signature element) ---------- */
+  .tulip {
+    width: 28px;
+    height: 28px;
+    display: block;
+    margin: 0 auto 28px;
+    opacity: 0.85;
+  }
+  .tulip path { fill: var(--accent); }
+
+  /* ================= LOCK SCREEN ================= */
+  .lock-screen {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .lock-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+
+  .lock-question {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(24px, 5vw, 30px);
+    line-height: 1.4;
+    margin-bottom: 36px;
+    color: var(--ink);
+  }
+
+  .lock-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .lock-input {
+    width: 100%;
+    max-width: 280px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    font-family: 'Jost', sans-serif;
+    font-size: 17px;
+    text-align: center;
+    padding: 10px 4px 12px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    transition: border-color 0.3s ease;
+  }
+
+  .lock-input::placeholder {
+    color: #BDB6AB;
+    font-weight: 300;
+  }
+
+  .lock-input:focus {
+    outline: none;
+    border-bottom-color: var(--accent);
+  }
+
+  .lock-submit {
+    margin-top: 8px;
+    background: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 13px 34px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .lock-submit:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .lock-error {
+    font-size: 13px;
+    color: var(--accent);
+    min-height: 18px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .lock-error.visible {
+    opacity: 1;
+  }
+
+  .lock-screen.shake {
+    animation: shake 0.45s ease;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(7px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(3px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ================= LETTER SCREEN ================= */
+  .letter-screen {
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .letter-screen.visible {
+    display: block;
+    animation: revealLetter 1.1s ease both;
+  }
+
+  @keyframes revealLetter {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .letter-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: clamp(40px, 8vw, 76px) clamp(28px, 8vw, 70px);
+    box-shadow: 0 30px 60px -30px rgba(43, 42, 40, 0.18);
+  }
+
+  .letter-eyebrow {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 30px;
+  }
+
+  .letter-salutation {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(28px, 6vw, 38px);
+    margin-bottom: 30px;
+    color: var(--ink);
+  }
+
+  .letter-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(17px, 2.4vw, 19px);
+    line-height: 1.85;
+    color: var(--ink);
+  }
+
+  .letter-body p {
+    margin-bottom: 22px;
+  }
+
+  .letter-body p.pause {
+    margin-top: 32px;
+  }
+
+  .letter-capsule {
+    font-style: italic;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--accent-soft);
+    padding-left: 18px;
+    margin: 32px 0;
+  }
+
+  .letter-signoff {
+    margin-top: 44px;
+  }
+
+  .letter-signoff .closing {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  .letter-signoff .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--ink);
+  }
+
+  .letter-footer-mark {
+    margin-top: 50px;
+  }
+
+  @media (max-width: 480px) {
+    .letter-card {
+      padding: 44px 24px;
+    }
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .lock-screen, .letter-screen.visible {
+      animation: none !important;
+    }
+    .lock-screen.shake {
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- LOCK SCREEN -->
+  <main class="lock-screen" id="lockScreen">
+    <svg class="tulip" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2c-2.2 0-4 2.6-4 5.4 0 1.6.7 3 1.8 4-2.6.2-4.8 1.6-5.8 3.7 2 .4 4-.1 5.6-1.4-.2.9-.3 1.9-.3 2.9 0 1.7.4 3.3 1.1 4.4h3.2c.7-1.1 1.1-2.7 1.1-4.4 0-1-.1-2-.3-2.9 1.6 1.3 3.6 1.8 5.6 1.4-1-2.1-3.2-3.5-5.8-3.7 1.1-1 1.8-2.4 1.8-4 0-2.8-1.8-5.4-4-5.4z"/>
+    </svg>
+    <p class="lock-eyebrow">Une lettre t'attend</p>
+    <p class="lock-question">Quel est ton&nbsp;deuxième&nbsp;prénom&nbsp;?</p>
+    <form class="lock-form" id="lockForm" autocomplete="off">
+      <label class="sr-only" for="answerInput">Deuxième prénom</label>
+      <input
+        class="lock-input"
+        id="answerInput"
+        type="text"
+        placeholder="Réponds ici…"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <p class="lock-error" id="lockError">Ce n'est pas tout à fait ça… essaie encore.</p>
+      <button class="lock-submit" type="submit">Ouvrir</button>
+    </form>
+  </main>
+
+  <!-- LETTER SCREEN -->
+  <section class="letter-screen" id="letterScreen" aria-live="polite">
+    <article class="letter-card">
+      <p class="letter-eyebrow">Pour toi, et pour toi seule</p>
+      <p class="letter-salutation">Mey,</p>
+      <div class="letter-body">
+        <p>Si tu lis ces mots, c'est qu'un bouquet de tulipes est arrivé jusqu'à toi. J'ai pensé à toi en les choisissant, parce que je sais à quel point tu les aimes.</p>
+
+        <p>Je n'ai pas envoyé ces fleurs pour effacer ce qui s'est passé. Je sais que ni des fleurs, ni une lettre, ni des excuses ne peuvent faire disparaître la douleur que je t'ai causée.</p>
+
+        <p>Je les ai envoyées parce que malgré tout ce qui se passe , je voulais t'offrir quelque chose de doux dans une période qui ne l'est pas.</p>
+
+        <p>Ces derniers jours, j'ai beaucoup réfléchi. J'ai repensé à nos conversations, à tes mots, à tes larmes, à ta confiance, à tout ce que tu m'as donné et que j'ai blessé sans en mesurer pleinement les conséquences.</p>
+
+        <p>Je m'en veux profondément.</p>
+
+        <p>Je m'en veux de t'avoir fait sentir que tes sentiments passaient après le reste. Je m'en veux de t'avoir donné l'impression que ta confiance n'était pas en sécurité avec moi. Je m'en veux d'avoir blessé la personne qui a toujours compté énormément pour moi.</p>
+
+        <p>Je sais que tu ne sais peut-être pas encore ce que tu veux pour nous. Et la vérité, c'est que moi non plus je ne sais pas ce que l'avenir nous réserve.</p>
+
+        <p>Ce que je sais, en revanche, c'est qu'au moment où j'écris cette lettre, je t'aime sincèrement.</p>
+
+        <p>Je ne sais pas si nous relirons un jour cette période ensemble, en nous disant que nous avons réussi à la traverser.</p>
+
+        <p>Je ne sais pas si cette lettre deviendra le souvenir d'une histoire qui s'est arrêtée ici.</p>
+
+        <p>Je ne sais pas non plus si, quand tu la liras, je ferai encore partie de ton quotidien.</p>
+
+        <p>Cette incertitude me fait peur, je ne vais pas te mentir.</p>
+
+        <p>Mais je ne veux pas que cette peur parle à ma place. Je veux simplement que cette lettre soit un instant figé dans le temps. Une petite capsule qui dit ceci :</p>
+
+        <p class="letter-capsule">À cet instant précis, quelque part dans le temps, il existait un garçon qui pensait à toi en écrivant chaque mot, qui regrettait sincèrement la peine qu'il t'avait causée, et qui te portait dans son cœur avec une sincérité absolue.</p>
+
+        <p>Et si j'ai un souhait à laisser entre ces lignes, c'est celui-ci :</p>
+
+        <p>J'espère que cette lettre ne sera qu'une parmi tant d'autres que j'aurai encore l'occasion de t'écrire.</p>
+
+        <p class="pause">Mais quelle que soit la suite de notre histoire, merci pour chaque sourire, chaque souvenir, chaque moment de douceur et chaque fois où quelque chose t'a naturellement ramenée à moi.</p>
+      </div>
+
+      <div class="letter-signoff">
+        <p class="closing">Avec toute ma sincérité,</p>
+        <p class="name">Mehdi</p>
+      </div>
+
+      <div class="letter-footer-mark">
+        <svg class="tulip" viewBox="0 0 24 24" aria-hidden="true" style="margin:0 auto;">
+          <path d="M12 2c-2.2 0-4 2.6-4 5.4 0 1.6.7 3 1.8 4-2.6.2-4.8 1.6-5.8 3.7 2 .4 4-.1 5.6-1.4-.2.9-.3 1.9-.3 2.9 0 1.7.4 3.3 1.1 4.4h3.2c.7-1.1 1.1-2.7 1.1-4.4 0-1-.1-2-.3-2.9 1.6 1.3 3.6 1.8 5.6 1.4-1-2.1-3.2-3.5-5.8-3.7 1.1-1 1.8-2.4 1.8-4 0-2.8-1.8-5.4-4-5.4z"/>
+        </svg>
+      </div>
+    </article>
+  </section>
+
+  <script>
+    // Réponse attendue (normalisée : minuscules, sans accents, espaces simplifiés)
+    var EXPECTED = "fatima zahra";
+
+    function normalize(str) {
+      return str
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // retire les accents
+        .replace(/[-_]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function isCorrect(value) {
+      var v = normalize(value);
+      var withSpace = normalize(EXPECTED);
+      var noSpace = withSpace.replace(/\s+/g, "");
+      return v === withSpace || v.replace(/\s+/g, "") === noSpace;
+    }
+
+    var lockScreen = document.getElementById('lockScreen');
+    var letterScreen = document.getElementById('letterScreen');
+    var lockForm = document.getElementById('lockForm');
+    var answerInput = document.getElementById('answerInput');
+    var lockError = document.getElementById('lockError');
+
+    lockForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var value = answerInput.value;
+
+      if (isCorrect(value)) {
+        lockScreen.style.display = 'none';
+        letterScreen.classList.add('visible');
+        window.scrollTo(0, 0);
+      } else {
+        lockError.classList.add('visible');
+        lockScreen.classList.remove('shake');
+        // force reflow to restart animation
+        void lockScreen.offsetWidth;
+        lockScreen.classList.add('shake');
+        answerInput.value = '';
+        answerInput.focus();
+      }
+    });
+
+    answerInput.addEventListener('input', function () {
+      lockError.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>
